@@ -1,0 +1,42 @@
+db.url: jdbc:mysql://${db.host}:${db.port}/${db.name}
+
+db:
+  host: localhost
+  port: 3306
+  name: fourfrika
+  username: root
+  password:
+
+spring:
+  jmx.enabled: true
+  jpa:
+    generate-ddl: false
+    hibernate.ddl-auto: none
+    properties.hibernate:
+      default_schema: liquibase_demo
+      enable_lazy_load_no_trans: true
+      dialect: org.hibernate.dialect.MySQLDialect
+  datasource:
+    url: ${db.url}
+    username: ${db.username}
+    password: ${db.password}
+    driverClassName: com.mysql.jdbc.Driver
+    initialize: true
+    validation-query: "SELECT version();"
+    test-on-borrow: true
+    min-idle: 10
+    max-idle: 10
+    initial-size: 10
+    max-active: 100
+    jmx-enabled: true
+
+logging.level.org.apache: DEBUG
+logging.level.org.hibernate: DEBUG
+
+logging.level.com.groupon: DEBUG
+logging.level.org.springframework.integration: DEBUG
+logging.level.org.springframework.test: DEBUG
+logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: DEBUG
+
+flyway:
+  enabled: false #prevent spring from initializing flyway flyway.enabled: false
