@@ -92,16 +92,28 @@
                         <artifactId>flyway-maven-plugin</artifactId>
                         <version>3.2.1</version>
                         <configuration>
-                            <url>jdbc:mysql://localhost:3306/fourfrika</url>
-                            <user>root</user>
+                            <configFile>src/main/resources/config/flyway-dev.properties</configFile>
                         </configuration>
-                        <dependencies>
-                            <dependency>
-                                <groupId>mysql</groupId>
-                                <artifactId>mysql-connector-java</artifactId>
-                                <version>5.1.36</version>
-                            </dependency>
-                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <version>${boot.version}</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-maven-plugin</artifactId>
+                        <version>3.2.1</version>
+                        <configuration>
+                            <configFile>src/main/resources/config/flyway-prod.properties</configFile>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>

@@ -13,7 +13,7 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
     properties.hibernate:
-      default_schema: liquibase_demo
+      default_schema: fourfrika
       enable_lazy_load_no_trans: true
       dialect: org.hibernate.dialect.MySQLDialect
   datasource:

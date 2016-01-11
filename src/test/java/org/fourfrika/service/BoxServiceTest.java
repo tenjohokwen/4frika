@@ -1,12 +1,12 @@
-package org._4frika.service;
+package org.fourfrika.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org._4frika.SampleDataJpaApplication;
-import org._4frika.domain.Box;
+import org.fourfrika.SampleDataJpaApplication;
+import org.fourfrika.domain.Box;
 
 import java.util.List;
 

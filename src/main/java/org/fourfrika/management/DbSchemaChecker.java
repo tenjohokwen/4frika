@@ -1,4 +1,4 @@
-package org._4frika.management;
+package org.fourfrika.management;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;

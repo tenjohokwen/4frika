@@ -14,16 +14,18 @@
  * limitations under the License.
  */
 
-package org._4frika;
+package org.fourfrika;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @ComponentScan
 @EnableAutoConfiguration
+@EnableTransactionManagement
 public class SampleDataJpaApplication {
 
 	public static void main(String[] args) throws Exception {

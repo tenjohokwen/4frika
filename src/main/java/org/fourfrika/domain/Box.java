@@ -1,4 +1,4 @@
-package org._4frika.domain;
+package org.fourfrika.domain;
 
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;

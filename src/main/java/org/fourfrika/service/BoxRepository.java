@@ -1,8 +1,7 @@
-package org._4frika.service;
+package org.fourfrika.service;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
-import org._4frika.domain.Box;
+import org.fourfrika.domain.Box;
 
 public interface BoxRepository extends JpaRepository<Box, Long> {
 

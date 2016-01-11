@@ -1,6 +1,6 @@
-package org._4frika.service;
+package org.fourfrika.service;
 
-import org._4frika.domain.Box;
+import org.fourfrika.domain.Box;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
