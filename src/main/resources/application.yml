@@ -37,13 +37,7 @@ custom:
     prepStmtCacheSqlLimit: 2048
 
 
-logging.level.org.apache: DEBUG
-logging.level.org.hibernate: DEBUG
-
-logging.level.com.groupon: DEBUG
-logging.level.org.springframework.integration: DEBUG
-logging.level.org.springframework.test: DEBUG
-logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: DEBUG
-
 flyway:
   enabled: false #prevent spring from initializing flyway flyway.enabled: false
+
+spring.profiles.include: local

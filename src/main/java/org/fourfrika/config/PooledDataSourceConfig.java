@@ -11,19 +11,21 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
 @Configuration
-//@EnableJpaRepositories("com.maviance.smartix.repository")
-//@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
-public class DatabaseConfiguration {
+@Profile({"prod"})
+public class PooledDataSourceConfig {
 
-    private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
+    private final Logger log = LoggerFactory.getLogger(PooledDataSourceConfig.class);
+
+    @Autowired
+    private DataSourceProperties dataSourceProperties;
 
     @Autowired
     private Environment env;
@@ -32,8 +34,7 @@ public class DatabaseConfiguration {
     //private MetricRegistry metricRegistry;
 
     @Bean(destroyMethod = "close")
-    @Primary
-    public DataSource dataSource(DataSourceProperties dataSourceProperties) {
+    public DataSource dataSource() {
         RelaxedPropertyResolver relaxedPropertyResolver = new RelaxedPropertyResolver(env, "custom.datasource.");
         log.debug("Configuring Datasource");
         HikariConfig config = new HikariConfig();
@@ -52,11 +53,13 @@ public class DatabaseConfiguration {
         return new HikariDataSource(config);
     }
 
+
     /*
     TODO4frika
     For jackson to serialize entities with lazy-loading relations
     see http://stackoverflow.com/questions/21708339/avoid-jackson-serialization-on-non-fetched-lazy-objects/21760361#21760361
      */
+    // TODO move this to the eventual web config
     @Bean
     public Hibernate4Module hibernate4Module() {
         return new Hibernate4Module();

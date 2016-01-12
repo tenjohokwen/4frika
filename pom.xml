@@ -24,6 +24,8 @@
         <jackson.version>2.7.0</jackson.version>
         <commons-io.version>2.4</commons-io.version>
         <commons-lang.version>2.6</commons-lang.version>
+        <log4j2-jdbc4.1>1.16</log4j2-jdbc4.1>
+        <mysql-connector-java>5.1.38</mysql-connector-java>
 	</properties>
     <dependencyManagement>
         <dependencies>
@@ -45,7 +47,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.36</version>
+            <version>${mysql-connector-java}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -62,6 +64,11 @@
                     <groupId>com.sun</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.bgee.log4jdbc-log4j2</groupId>
+            <artifactId>log4jdbc-log4j2-jdbc4.1</artifactId>
+            <version>${log4j2-jdbc4.1}</version>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
