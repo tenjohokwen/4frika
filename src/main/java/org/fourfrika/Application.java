@@ -26,10 +26,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan
 @EnableAutoConfiguration
 @EnableTransactionManagement
-public class SampleDataJpaApplication {
+public class Application {
 
 	public static void main(String[] args) throws Exception {
-		SpringApplication.run(SampleDataJpaApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 

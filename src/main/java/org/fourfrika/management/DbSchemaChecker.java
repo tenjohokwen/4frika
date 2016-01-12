@@ -4,6 +4,7 @@ import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContextException;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -34,7 +35,7 @@ public class DbSchemaChecker {
     private void validateDbSchema() {
         MigrationInfo[] pending = flyway.info().pending();
         if (pending.length > 0) {
-            throw new IllegalStateException("The database still has pending updates");
+            throw new ApplicationContextException("The database still has pending updates");
         }
     }
 

@@ -1,11 +1,12 @@
 package org.fourfrika.service;
 
+import org.fourfrika.repository.BoxRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.fourfrika.SampleDataJpaApplication;
+import org.fourfrika.Application;
 import org.fourfrika.domain.Box;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {SampleDataJpaApplication.class})
+@SpringApplicationConfiguration(classes = {Application.class})
 public class BoxServiceTest {
 
     @Autowired

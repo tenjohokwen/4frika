@@ -1,4 +1,4 @@
-package org.fourfrika.service;
+package org.fourfrika.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.fourfrika.domain.Box;

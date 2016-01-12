@@ -7,7 +7,7 @@
             <version>1.5</version>
 	</parent>
 	<artifactId>4frika</artifactId>
-	<groupId>org._4frika</groupId>
+	<groupId>org.fourfrika</groupId>
 	<name>Spring Boot Data JPA Sample</name>
 	<description>Spring Boot Data JPA Sample</description>
 	<version>1.0-SNAPSHOT</version>
@@ -19,6 +19,11 @@
 	<properties>
 		<main.basedir>${basedir}/../..</main.basedir>
         <boot.version>1.2.5.RELEASE</boot.version>
+        <start-class>${project.groupId}.Application</start-class>
+        <hikaricp.version>2.4.3</hikaricp.version>
+        <jackson.version>2.7.0</jackson.version>
+        <commons-io.version>2.4</commons-io.version>
+        <commons-lang.version>2.6</commons-lang.version>
 	</properties>
     <dependencyManagement>
         <dependencies>
@@ -42,20 +47,108 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.36</version>
         </dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
             <version>3.2.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>${hikaricp.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>tools</artifactId>
+                    <groupId>com.sun</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate4</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!-- (TODO4frika) for optimized collections see https://github.com/carrotsearch/hppc/wiki dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hppc</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        < to and from csv see https://gist.github.com/shsdev/11392809 dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-csv</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        < to and from yaml  dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        < for hibernate 5 dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-parameter-names</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-json-org</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jdk8</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-joda</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>${commons-io.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -74,6 +167,9 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${boot.version}</version>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
 			</plugin>
         </plugins>
 	</build>
@@ -82,11 +178,6 @@
             <id>dev</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>${boot.version}</version>
-                    </plugin>
                     <plugin>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-maven-plugin</artifactId>
@@ -102,11 +193,6 @@
             <id>prod</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.springframework.boot</groupId>
-                        <artifactId>spring-boot-maven-plugin</artifactId>
-                        <version>${boot.version}</version>
-                    </plugin>
                     <plugin>
                         <groupId>org.flywaydb</groupId>
                         <artifactId>flyway-maven-plugin</artifactId>

@@ -20,7 +20,7 @@ spring:
     url: ${db.url}
     username: ${db.username}
     password: ${db.password}
-    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.jdbc2.optional.MysqlDataSource
     initialize: true
     validation-query: "SELECT version();"
     test-on-borrow: true
@@ -29,6 +29,13 @@ spring:
     initial-size: 10
     max-active: 100
     jmx-enabled: true
+
+custom:
+  datasource:
+    cachePrepStmts: true
+    prepStmtCacheSize: 250
+    prepStmtCacheSqlLimit: 2048
+
 
 logging.level.org.apache: DEBUG
 logging.level.org.hibernate: DEBUG
