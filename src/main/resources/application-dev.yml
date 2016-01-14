@@ -37,13 +37,9 @@ custom:
     prepStmtCacheSqlLimit: 2048
 
 
-logging.level.org.apache: DEBUG
+logging.level.org.apache: ERROR
 logging.level.org.hibernate: DEBUG
 
-logging.level.com.groupon: DEBUG
-logging.level.org.springframework.integration: DEBUG
-logging.level.org.springframework.test: DEBUG
-logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: DEBUG
 
 # Change the following logs to DEBUG in order to monitor issues
 logging.level.jdbc.sqlonly: ERROR
@@ -54,6 +50,30 @@ logging.level.jdbc.connection: ERROR
 logging.level.org.hibernate.engine: ERROR
 logging.level.org.hibernate.loader: ERROR
 logging.level.org.hibernate.hql: ERROR
+logging.level.org.hibernate.SQL: ERROR
+logging.level.org.hibernate.jpa: ERROR
+logging.level.org.hibernate.persister: ERROR
+logging.level.org.hibernate.cfg: ERROR
+logging.level.org.hibernate.type: ERROR   #Shows the types hibernate is adding to context
+logging.level.jdbc.resultsettable: ERROR  #Plain text version of table with data
+
+# hibernate context
+logging.level.org.hibernate.validator.internal: ERROR
+logging.level.org.hibernate.jpa.internal: ERROR
+logging.level.org.hibernate.integrator.internal: ERROR
+logging.level.org.hibernate.boot.registry.internal: ERROR
+logging.level.org.hibernate.id.factory.internal: ERROR  #id generation info
+logging.level.org.hibernate.internal: ERROR  #Display properties of the session factory
+logging.level.org.event.internal: ERROR  #Display properties of the session factory
+
+#Spring boot context info
+logging.level.org.springframework.boot.context: ERROR
+logging.level.org.springframework.web.context: ERROR
+logging.level.org.springframework.context: ERROR
+logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: ERROR
+logging.level.org.springframework.context.cache: DEBUG  #cache stats during tests. Too many misses => reduce use of @DirtiesContext
+logging.level.org.springframework.test: ERROR  #These libs will debug until this config is loaded and set
+
 
 flyway:
   enabled: false #prevent spring from initializing flyway flyway.enabled: false
