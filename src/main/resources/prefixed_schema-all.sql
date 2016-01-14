@@ -1,8 +1,8 @@
-DROP SCHEMA IF EXISTS liquibase_demo;
-CREATE SCHEMA liquibase_demo;
+DROP SCHEMA IF EXISTS fourfrika;
+CREATE SCHEMA fourfrika;
 
-#SET search_path = liquibase_demo;
-use liquibase_demo;
+#SET search_path = fourfrika;
+use fourfrika;
 
 CREATE TABLE box
 (

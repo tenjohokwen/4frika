@@ -19,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@Profile({"prod"})
+@Profile({"!dev"})
 public class PooledDataSourceConfig {
 
     private final Logger log = LoggerFactory.getLogger(PooledDataSourceConfig.class);
