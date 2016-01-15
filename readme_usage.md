@@ -42,3 +42,21 @@ TIPS
   * src/main/resources/prefixed_schema-all.sql
 
 * In addition,at the moment spring will not execute the above sql once flyway is on the classpath. see https://github.com/spring-projects/spring-boot/issues/2753
+
+
+
+Configs
+=======
+
+Flyway
+------
+* Dependencies
+* Added maven plugin which will do migrations and corresponding flyway-[env].properties files for portability's sake(src/main/resources/config)
+* Used default location for migration scripts (src/main/resources/db/migration)
+* Used default versioning Vxx
+* Added flyway test lib (runs migration scripts before each test thanks to @FlywayTest annotation and FlywayTestExecutionListener)
+* Added flyway-dbunit-spring4-test lib for dbunit integration and it needs @FlywayTest, @DBUnitSupport and the following listeners:
+    * DbUnitTestExecutionListener.class
+    * DependencyInjectionTestExecutionListener.class
+    * FlywayDBUnitTestExecutionListener.class (this is a superset of FlywayTestExecutionListener)
+* see https://github.com/flyway/flyway-test-extensions/blob/master/flyway-test-extensions/flyway-test-samples/flyway-test-dbunit-samples/flyway-test-sample-dbunit-spring4/src/test/java/org/flywaydb/test/sample/spring4/Spring4DBunitTest.java
