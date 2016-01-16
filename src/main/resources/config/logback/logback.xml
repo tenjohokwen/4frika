@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <property name="APPENDER_NAME" value="FILE"/>
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID} --- [%t] requestId=%X{requestId} txnId=%X{txnId} sessionTracker=%X{sessionTracker}  username=%X{username} %-40.40logger{39} : %m%n%wex"/>
+    <property name="LOG_FILE" value="/usr/local/var/log/fourfrika.log}"/>
+
+    <include resource="rollingAppender.xml"/>
+    <root level="INFO">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
+

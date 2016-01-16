@@ -36,10 +36,10 @@ custom:
     prepStmtCacheSize: 250
     prepStmtCacheSqlLimit: 2048
 
-
-logging.level.org.apache: ERROR
-logging.level.org.hibernate: DEBUG
-
+#logging
+logging.config: classpath:config/logback/logback-dev.xml
+logging.level.org: INFO
+logging.level.jdbc: INFO
 
 # Change the following logs to DEBUG in order to monitor issues
 logging.level.jdbc.sqlonly: ERROR

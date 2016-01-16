@@ -1,2 +1,2 @@
 #spring.profiles.active: dev  # This will not work simply because it is overridden by "@ActiveProfiles(value = {"test"})" on test methods. see
-spring.profiles.include: dev #This also works
+spring.profiles.include: dev

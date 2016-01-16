@@ -32,6 +32,7 @@
         <flyway-spring-test.version>3.2.1.1</flyway-spring-test.version>
         <flyway-dbunit-test.version>3.2.1.1</flyway-dbunit-test.version>
         <assertj-core.version>3.3.0</assertj-core.version>
+        <logstash-logback-encoder.version>4.5.1</logstash-logback-encoder.version>
 	</properties>
     <dependencyManagement>
         <dependencies>
@@ -157,6 +158,11 @@
             <artifactId>commons-lang</artifactId>
             <version>${commons-lang.version}</version>
         </dependency>
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+            <version>${logstash-logback-encoder.version}</version>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -191,6 +197,16 @@
             <version>${assertj-core.version}</version>
             <scope>test</scope>
         </dependency>
+        <!--dependency>
+            <groupId>com.ibm.icu</groupId>
+            <artifactId>icu4j</artifactId>
+            <version>56.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.neovisionaries</groupId>
+            <artifactId>nv-i18n</artifactId>
+            <version>1.18</version>
+        </dependency-->
     </dependencies>
     <repositories>
         <repository>
@@ -225,7 +241,7 @@
                         <artifactId>flyway-maven-plugin</artifactId>
                         <version>3.2.1</version>
                         <configuration>
-                            <configFile>src/main/resources/config/flyway-dev.properties</configFile>
+                            <configFile>src/main/resources/config/flyway_plugin/flyway-dev.properties</configFile>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -240,7 +256,7 @@
                         <artifactId>flyway-maven-plugin</artifactId>
                         <version>3.2.1</version>
                         <configuration>
-                            <configFile>src/main/resources/config/flyway-prod.properties</configFile>
+                            <configFile>src/main/resources/config/flyway_plugin/flyway-prod.properties</configFile>
                         </configuration>
                     </plugin>
                 </plugins>

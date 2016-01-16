@@ -41,3 +41,16 @@ flyway:
   enabled: false #prevent spring from initializing flyway flyway.enabled: false
 
 spring.profiles.include: local
+
+#logging
+# default location is directly in the classpath
+logging.config: classpath:config/logback/logback.xml
+
+
+##Tomcat log
+# Directory in which log files are created. Can be relative to the tomcat base dir or absolute.
+server.tomcat.accesslog.directory: /usr/local/var/log
+server.tomcat.accesslog.enabled: true
+server.tomcat.accesslog.pattern: "%{yyyy-MM-dd HH:mm:ss.SSS}t %a (%{X-Forwarded-For}i) > %A:%p '%r' %{requestBodyLength}r %D %s %B %I '%{Referer}i' '%{User-Agent}i' %u %{username}s %{sessionTracker}s"
+server.tomcat.accesslog.prefix: access_log
+server.tomcat.accesslog.suffix: .log
