@@ -1,7 +1,7 @@
 package org.fourfrika.domain;
 
-import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.hibernate.envers.Audited;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,9 +11,9 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "box")
-@SQLDelete(sql="UPDATE box SET deleted = '1' WHERE id = ?")
+@Audited
 @Where(clause="deleted <> '1'")
-public class Box implements Serializable {
+public class Box extends AbstractAuditingEntity implements Serializable {
     @Id
     private Long id;
 
@@ -36,6 +36,14 @@ public class Box implements Serializable {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public int getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(int deleted) {
+        this.deleted = deleted;
     }
 
     @Override

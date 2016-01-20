@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
 public class BoxService {
     @Autowired
@@ -20,4 +22,15 @@ public class BoxService {
         box.setLabel(label);
         boxRepository.save(box);
     }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
+    public void delete(Long id) {
+        Box box = boxRepository.findOne(id);
+        if(box!=null) {
+            box.setDeleted(1);
+        } else {
+            throw new EntityNotFoundException("Attempt to delete non-existent entity");
+        }
+    }
+
 }

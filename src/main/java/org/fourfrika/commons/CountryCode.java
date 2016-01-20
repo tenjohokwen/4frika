@@ -244,10 +244,10 @@ public enum CountryCode {
     ZAMBIA("Zambia", "ZM", "ZMB", "894"),
     ZIMBABWE("Zimbabwe", "ZW", "ZWE", "716");
 
-    private String countryName;
-    private String A2Code;
-    private String A3Code;
-    private String NMCode;
+    private final String countryName;
+    private final String A2Code;
+    private final String A3Code;
+    private final String NMCode;
 
     CountryCode(String countryName, String A2Code, String A3Code, String NMCode) {
         this.countryName = countryName;

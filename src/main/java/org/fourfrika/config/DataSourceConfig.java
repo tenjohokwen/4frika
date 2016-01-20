@@ -1,6 +1,7 @@
 package org.fourfrika.config;
 
 import net.sf.log4jdbc.sql.jdbcapi.DataSourceSpy;
+import org.fourfrika.domain.AuditingDateTimeProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -9,6 +10,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -16,6 +19,8 @@ import javax.sql.DataSource;
  * Created by mokwen on 12.01.16.
  */
 @Configuration
+@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware", dateTimeProviderRef = AuditingDateTimeProvider.NAME)
+@EnableTransactionManagement
 @Profile({"dev"})
 public class DataSourceConfig {
 

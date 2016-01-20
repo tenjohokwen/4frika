@@ -118,3 +118,48 @@ logging.config: classpath:config/logback/logback-dev.xml
 * I added 'class="net.logstash.logback.encoder.LogstashEncoder"' to the rollingAppender but this is completely optional
 * The logstashEncoder requires "logstash-logback-encoder" on the class path
 * 'logstash-logback-encoder' is actually intended to be used for json(ing) log data (not yet versed with its usage but it does not harm to have it)
+
+
+
+Auditing
+--------
+* Added the following
+    * AbstractAuditingEntity
+    * AuditingDateTimeProvider
+    * DateTimeService
+    * DateTimeServiceImpl
+    * SpringSecurityAuditorAware
+    * Add "EnableJpaAuditing" to your persistence config / db config, [@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware", dateTimeProviderRef = AuditingDateTimeProvider.NAME)]
+* Libs added
+    * joda-time
+    * usertype.core (jadira)
+    * hibernate-envers
+    * hibernate-validator
+    * joda-time-hibernate
+    * spring-boot-starter-tomcat
+* Add extends clause to entity like so "extends AbstractAuditingEntity"
+
+####hibernate auditing
+* You only need to have an entity with a primary key and use the annotation @Audited.
+* You can use the annotation @Audited either at the top of the class or only in the fields that you would like to audit.
+* NB If your mapped super type is not @Audited, you will not get its fields audited by hibernate
+* In other words @Audited needs to be both on the Mapped super class as well as the entity extending the mapped super class
+* Once you add the @Audited annotation you will see that a new table with the suffix “_AUD” will be created for each entity.
+* Also you will find that a new table called REVINFO, which contains all the revisions information, has been created.
+* using the sqldelete clause on entities causes them not to be versioned (audited) by hibernate [@SQLDelete(sql="UPDATE box SET deleted = '1' WHERE id = ?")]
+
+
+Date zone
+---------
+
+* Converting db UTC to zoned time (config)
+      spring.jpa.properties.jadira.usertype:
+        autoRegisterUserTypes: true
+        javaZone: ${app.zone}
+        databaseZone: ${app.zone}
+
+```
+@Column
+@Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+private DateTime dateTime;
+``

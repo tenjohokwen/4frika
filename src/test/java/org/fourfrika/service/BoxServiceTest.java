@@ -1,5 +1,6 @@
 package org.fourfrika.service;
 
+import com.google.common.util.concurrent.Uninterruptibles;
 import org.flywaydb.test.annotation.FlywayTest;
 import org.flywaydb.test.dbunit.DBUnitSupport;
 import org.fourfrika.Application;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -29,11 +31,32 @@ public class BoxServiceTest extends DBUnitTest {
 
     @Test
     public void testUpdateBox() throws Exception {
-        List<Box> boxes = (List<Box>) boxRepository.findAll();
+        List<Box> boxes = boxRepository.findAll();
         int initialCount = boxes.size();
+        persistBox();
         boxRepository.delete(5l);
-        boxes = (List<Box>) boxRepository.findAll();
-        assertTrue(boxes.size() == (initialCount - 1));
+        boxes =  boxRepository.findAll();
+        assertTrue(boxes.size() == (initialCount));
+        boxService.delete(2l);
+        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+        Box box = boxRepository.findOne(20l);
+        String id = box.getCreatedDate().toString();
+        boxService.delete(20l);
+    }
+
+    @Test
+    public void testAudit() throws Exception {
+        persistBox();
+    }
+
+    private void persistBox() {
+        Box box = new Box();
+        box.setLabel("blueLabel");
+        box.setId(20l);
+        boxRepository.save(box);
+        Box boxx = boxRepository.getOne(20l);
+        boxx.setLabel("blue_label");
+        boxRepository.save(boxx);
     }
 
     @Test
@@ -41,7 +64,7 @@ public class BoxServiceTest extends DBUnitTest {
     @DBUnitSupport(
             loadFilesForRun = { "INSERT", "/dbunit/dbunit_add_dirty_white.xml"})
     public void testDirtyWhite() throws Exception {
-        List<Box> boxes = (List<Box>) boxRepository.findAll();
+        List<Box> boxes = boxRepository.findAll();
         assertThat(boxes.size()).isEqualTo(6);
     }
 
