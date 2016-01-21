@@ -3,7 +3,7 @@ db.url: jdbc:mysql://${db.host}:${db.port}/${db.name}
 db:
   host: localhost
   port: 3306
-  name: fourfrika
+  name: ${app.name}
   username: root
   password:
 
@@ -13,7 +13,7 @@ spring:
     generate-ddl: false
     hibernate.ddl-auto: none
     properties.hibernate:
-      default_schema: fourfrika
+      default_schema: ${db.name}
       enable_lazy_load_no_trans: true
       dialect: org.hibernate.dialect.MySQLDialect
   datasource:

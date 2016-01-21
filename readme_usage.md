@@ -52,6 +52,7 @@ Flyway
 ------
 * Dependencies
 * Added maven plugin which will do migrations and corresponding flyway-[env].properties files for portability's sake(src/main/resources/config)
+* The default location of the configuration file is the same same folder as the pom, that's why I had to explicitly specify one located in the resources folder
 * Used default location for migration scripts (src/main/resources/db/migration)
 * Used default versioning Vxx
 * Added flyway test lib (runs migration scripts before each test thanks to @FlywayTest annotation and FlywayTestExecutionListener)
@@ -118,6 +119,7 @@ logging.config: classpath:config/logback/logback-dev.xml
 * I added 'class="net.logstash.logback.encoder.LogstashEncoder"' to the rollingAppender but this is completely optional
 * The logstashEncoder requires "logstash-logback-encoder" on the class path
 * 'logstash-logback-encoder' is actually intended to be used for json(ing) log data (not yet versed with its usage but it does not harm to have it)
+* Logback config makes use of application-commons.properties for some its placeholders [see](http://stackoverflow.com/questions/29322709/unable-to-use-spring-property-placeholders-in-logback-xml)
 
 
 
@@ -162,4 +164,17 @@ Date zone
 @Column
 @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 private DateTime dateTime;
-``
+```
+
+
+Profiles
+---------
+* Tests add the 'test' profiles by themselves see for example @ActiveProfiles(value = {"test"}) of DBUnitTest class
+* Other profiles are added through the following config in application.yml
+  ``
+  spring.profiles.include: commons,local
+  ```
+* 'commons' is for shared config
+* 'local' is actually meant to be for local config.  use it to define your dev profile <code>spring.profiles.include: dev</code>
+* In the dev env, during tests the following profiles should be active: dev,commons,local,test
+* The main thread will produce the following log "The following profiles are active: dev,commons,local,test"

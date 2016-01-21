@@ -1,10 +1,9 @@
 db.url: jdbc:mysql://${db.host}:${db.port}/${db.name}
-app.zone: "America/New_York"
 
 db:
   host: localhost
   port: 3306
-  name: fourfrika
+  name: ${app.name}
   username: root
   password:
 
@@ -15,7 +14,7 @@ spring:
     hibernate.ddl-auto: none
     properties:
       hibernate:
-        default_schema: fourfrika
+        default_schema: ${db.name}
         enable_lazy_load_no_trans: true
         dialect: org.hibernate.dialect.MySQLDialect
   datasource:
@@ -42,7 +41,7 @@ custom:
 flyway:
   enabled: false #prevent spring from initializing flyway flyway.enabled: false
 
-spring.profiles.include: local
+spring.profiles.include: commons,local
 
 #logging
 # default location is directly in the classpath
