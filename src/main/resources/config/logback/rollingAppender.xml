@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <included>
     <appender name="${APPENDER_NAME}" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <encoder class="net.logstash.logback.encoder.LogstashEncoder">
+        <encoder>
             <pattern>${LOG_PATTERN}</pattern>
         </encoder>
         <file>${LOG_FILE}</file>

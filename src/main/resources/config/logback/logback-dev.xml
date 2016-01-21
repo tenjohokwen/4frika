@@ -7,8 +7,9 @@
     <property resource="application-commons.properties" />
     <property name="APPENDER_NAME" value="FILE"/>
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS, ${app.zone}} %5p ${PID} --- [%t] requestId=%X{requestId} txnId=%X{txnId} sessionTracker=%X{sessionTracker}  username=%X{username} %-40.40logger{39} : %m%n%wex"/>
-    <property name="LOG_FILE" value="/usr/local/var/log/${app.name}.log}"/>
+    <property name="LOG_FILE" value="/usr/local/var/log/${app.name}-dev.log}"/>
 
+    <include resource="config/logback/rollingAppender.xml"/>
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <Pattern>
@@ -16,7 +17,6 @@
             </Pattern>
         </encoder>
     </appender>
-    <include resource="rollingAppender.xml"/>
     <root level="INFO">
         <appender-ref ref="FILE" />
         <appender-ref ref="STDOUT" />

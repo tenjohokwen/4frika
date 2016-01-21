@@ -9,7 +9,7 @@
     <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS, ${app.zone}} %5p ${PID} --- [%t] requestId=%X{requestId} txnId=%X{txnId} sessionTracker=%X{sessionTracker}  username=%X{username} %-40.40logger{39} : %m%n%wex"/>
     <property name="LOG_FILE" value="/usr/local/var/log/${app.name}.log}"/>
 
-    <include resource="rollingAppender.xml"/>
+    <include resource="config/logback/rollingAppender.xml"/>
     <root level="INFO">
         <appender-ref ref="FILE" />
     </root>
