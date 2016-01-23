@@ -39,10 +39,10 @@ custom:
 #logging
 logging.config: classpath:config/logback/logback-dev.xml
 logging.level.org: INFO
-logging.level.jdbc: INFO
+logging.level.jdbc: ERROR
 
 # Change the following logs to DEBUG in order to monitor issues
-logging.level.jdbc.sqlonly: ERROR
+logging.level.jdbc.sqlonly: INFO
 logging.level.jdbc.sqltiming: ERROR
 logging.level.jdbc.audit: ERROR
 logging.level.jdbc.resultset: ERROR

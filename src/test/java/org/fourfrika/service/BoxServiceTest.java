@@ -30,6 +30,7 @@ public class BoxServiceTest extends DBUnitTest {
     private BoxRepository boxRepository;
 
     @Test
+    @FlywayTest
     public void testUpdateBox() throws Exception {
         List<Box> boxes = boxRepository.findAll();
         int initialCount = boxes.size();
@@ -39,12 +40,10 @@ public class BoxServiceTest extends DBUnitTest {
         assertTrue(boxes.size() == (initialCount));
         boxService.delete(2l);
         Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
-        Box box = boxRepository.findOne(20l);
-        String id = box.getCreatedDate().toString();
-        boxService.delete(20l);
     }
 
     @Test
+    @FlywayTest
     public void testAudit() throws Exception {
         persistBox();
     }
@@ -52,9 +51,9 @@ public class BoxServiceTest extends DBUnitTest {
     private void persistBox() {
         Box box = new Box();
         box.setLabel("blueLabel");
-        box.setId(20l);
+        box.setId(21l);
         boxRepository.save(box);
-        Box boxx = boxRepository.getOne(20l);
+        Box boxx = boxRepository.getOne(21l);
         boxx.setLabel("blue_label");
         boxRepository.save(boxx);
     }

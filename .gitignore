@@ -1,4 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
+#files
+git.properties
+
 ### JetBrains template
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
 
@@ -6,6 +9,7 @@
 
 ## Directory-based project format:
 .idea/
+
 
 ## File-based project format:
 *.ipr
