@@ -38,11 +38,13 @@ custom:
 
 #logging
 logging.config: classpath:config/logback/logback-dev.xml
-logging.level.org: INFO
+logging.level.org: ERROR
 logging.level.jdbc: ERROR
 
 # Change the following logs to DEBUG in order to monitor issues
-logging.level.jdbc.sqlonly: INFO
+# Change the following to info (logging.level... org, jdbc.sqlonly, springframework.context.cache)
+
+logging.level.jdbc.sqlonly: ERROR
 logging.level.jdbc.sqltiming: ERROR
 logging.level.jdbc.audit: ERROR
 logging.level.jdbc.resultset: ERROR
@@ -71,7 +73,7 @@ logging.level.org.springframework.boot.context: ERROR
 logging.level.org.springframework.web.context: ERROR
 logging.level.org.springframework.context: ERROR
 logging.level.org.springframework.boot.context.config.ConfigFileApplicationListener: ERROR
-logging.level.org.springframework.context.cache: DEBUG  #cache stats during tests. Too many misses => reduce use of @DirtiesContext
+logging.level.org.springframework.context.cache: ERROR  #cache stats during tests. Too many misses => reduce use of @DirtiesContext
 logging.level.org.springframework.test: ERROR  #These libs will debug until this config is loaded and set
 
 

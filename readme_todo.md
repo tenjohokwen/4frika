@@ -1,6 +1,6 @@
 * metrics
    * General
-   * threadpools
+   * threadpools (InstrumentedHttpRequestExecutor from dropwizard,InstrumentedExecutorService, InstrumentedScheduledExecutorService)
    * clients (resttemplate, httpClient)
 * CORS
 * hysterix
@@ -21,6 +21,7 @@
     * ensure no conflicts with spring-boot parent pom
     * dependencies already in spring-boot parent pom or base pom should be used without specifying their versions (assuming they are managed)
 
+* TomcatGaugeSet (from spaceman)
 
 touched
 --------

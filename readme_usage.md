@@ -178,3 +178,38 @@ Profiles
 * 'local' is actually meant to be for local config.  use it to define your dev profile <code>spring.profiles.include: dev</code>
 * In the dev env, during tests the following profiles should be active: dev,commons,local,test
 * The main thread will produce the following log "The following profiles are active: dev,commons,local,test"
+
+
+
+testng and junit
+----------------
+
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <properties>
+                        <property>
+                            <name>junit</name> <!-- do not use testng to run junit -->
+                            <value>false</value>
+                        </property>
+                    </properties>
+                    <threadCount>1</threadCount> <!-- number of parallel threads for the tests. testng feature -->
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-junit47</artifactId>
+                        <version>2.19.1</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.apache.maven.surefire</groupId>
+                        <artifactId>surefire-testng</artifactId>
+                        <version>2.19.1</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+* The above configuration of the maven-surefire-plugin makes it possible for both testng and junit tests to be run by maven on the command line
+* The above configuration is the minimal basic that works in this env
+* See [link](https://maven.apache.org/surefire/maven-surefire-plugin/examples/testng.html). Note that not just the config above worked for this env
