@@ -23,6 +23,13 @@
 
 * TomcatGaugeSet (from spaceman)
 
+Exception handling
+-------------------
+* core exception: 4frikaException (runtimeException, protected field "HELP_CODE" UUID that is generated when exception is created and final)
+* override the getMessage in every impl
+* "HELP_CODE" should be available in getMessage => logs should all contain the HELP_CODE UUID
+* See ErrorMessage (and CheckoutApiExceptionHandler) of spaceman for ideas on how to prepare client friendly message
+
 touched
 --------
 
@@ -30,3 +37,42 @@ touched
 * auditing (db tables audit done but no event logging as yet)
 * flyway dbunit and hikari
 * log4jdbc
+
+
+duplicate checker plugin
+------------------------
+
+            <plugin>
+                <groupId>com.ning.maven.plugins</groupId>
+                <artifactId>maven-duplicate-finder-plugin</artifactId>
+                <version>${basepom.plugin.duplicate-finder.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+                    <ignoredDependencies>
+                        <dependency>
+                            <!-- seems to have some duplicates with hibernate-jpa-2.1-api but should be ignored-->
+                            <groupId>org.apache.tomcat.embed</groupId>
+                            <artifactId>tomcat-embed-core</artifactId>
+                        </dependency>
+                    </ignoredDependencies>
+                    <ignoredResources>
+                        <resource>META-INF/spring.factories</resource>
+                        <resource>META-INF/spring.provides</resource>
+                        <resource>META-INF/additional-spring-configuration-metadata.json</resource>
+                        <resource>META-INF/spring-configuration-metadata.json</resource>
+                        <resource>META-INF/web-fragment.xml</resource>
+                        <resource>changelog.txt</resource>
+                    </ignoredResources>
+                </configuration>
+            </plugin>
+
+
+run maven with alternative central repo
+-----------------------------------------
+
+* append to it " -P  \!groupon" e.g
+
+```
+ mvn duplicate-finder:check  -P  \!groupon
+```

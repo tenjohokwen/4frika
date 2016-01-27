@@ -59,6 +59,7 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
             <exclusions>
                 <exclusion>
+                    <!-- brings in org.apache.juli classes that are duplicated by tomcat-embed-logging-juli-->
                     <artifactId>spring-boot-starter-jdbc</artifactId>
                     <groupId>org.springframework.boot</groupId>
                 </exclusion>
@@ -448,6 +449,41 @@
                     </dependency>
                 </dependencies>
             </plugin>
+            <plugin>
+                <groupId>com.ning.maven.plugins</groupId>
+                <artifactId>maven-dependency-versions-check-plugin</artifactId>
+                <version>${basepom.plugin.dependency-versions-check.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.ning.maven.plugins</groupId>
+                <artifactId>maven-duplicate-finder-plugin</artifactId>
+                <version>${basepom.plugin.duplicate-finder.version}</version>
+                <configuration>
+                    <skip>false</skip>
+                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
+                    <ignoredDependencies>
+                        <dependency>
+                            <!-- seems to have some duplicates with hibernate-jpa-2.1-api but should be ignored-->
+                            <groupId>org.apache.tomcat.embed</groupId>
+                            <artifactId>tomcat-embed-core</artifactId>
+                        </dependency>
+                    </ignoredDependencies>
+                    <ignoredResources>
+                        <resource>META-INF/spring.factories</resource>
+                        <resource>META-INF/spring.provides</resource>
+                        <resource>META-INF/additional-spring-configuration-metadata.json</resource>
+                        <resource>META-INF/spring-configuration-metadata.json</resource>
+                        <resource>META-INF/web-fragment.xml</resource>
+                        <resource>changelog.txt</resource>
+                    </ignoredResources>
+                </configuration>
+            </plugin>
+
         </plugins>
 	</build>
     <profiles>
