@@ -11,9 +11,6 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withStatus;
 
-/**
- * Created by mokwen on 01.02.16.
- */
 public class MockClientAPIUtils {
     public static MockRestServiceServer createMockServer(AbstractClient client) {
         return MockRestServiceServer.createServer(client.getRestTemplate());

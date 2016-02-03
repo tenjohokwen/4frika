@@ -1,8 +1,5 @@
 package org.fourfrika.commons;
 
-/**
- * Created by mokwen on 15.01.16.
- */
 public enum CountryCode {
 
     AALAND_ISLANDS("Aaland Islands", "AX", "ALA", "248"),

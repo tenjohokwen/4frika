@@ -2,6 +2,8 @@ package org.fourfrika.management;
 
 import org.flywaydb.core.Flyway;
 import org.flywaydb.core.api.MigrationInfo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContextException;
@@ -10,6 +12,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * For the actual environment, this class ensures that the configured db schema is up to date
@@ -38,7 +43,9 @@ public class DbSchemaChecker {
     private void validateDbSchema() {
         MigrationInfo[] pending = flyway.info().pending();
         if (pending.length > 0) {
-            throw new ApplicationContextException("The database still has pending updates");
+            final List<String> scripts = new ArrayList<>(pending.length);
+            Arrays.stream(pending).forEach(action -> scripts.add(action.getScript()));
+            throw new ApplicationContextException("The database still has pending updates: " + scripts);
         }
     }
 

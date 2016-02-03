@@ -15,9 +15,9 @@ import static com.codahale.metrics.MetricRegistry.name;
 
 /**
  */
-public class InstrumentedMDCAwareExecutables {
+class InstrumentedMDCAwareExecutables {
 
-    public static <T> Callable<T> instrument(Callable<T> callable, MetricRegistry registry, String metricPrefix) {
+    static <T> Callable<T> instrument(Callable<T> callable, MetricRegistry registry, String metricPrefix) {
         final ClientContext clientContext = ClientContext.instance();
         final Timer.Context context = registry.timer(MetricRegistry.name(metricPrefix, ExecutorInstrumentor.QUEUE_DELAY_POSTFIX)).time();
         Map<String, String> currentThreadCxt = MDC.getCopyOfContextMap();
@@ -35,7 +35,7 @@ public class InstrumentedMDCAwareExecutables {
         };
     }
 
-    public static Runnable instrument(Runnable task, MetricRegistry registry, String metricPrefix) {
+    static Runnable instrument(Runnable task, MetricRegistry registry, String metricPrefix) {
         ClientContext clientContext = ClientContext.instance();
         final Timer.Context context = registry.timer(MetricRegistry.name(metricPrefix, ExecutorInstrumentor.QUEUE_DELAY_POSTFIX)).time();
         Map<String, String> currentThreadCxt = MDC.getCopyOfContextMap();
@@ -52,7 +52,7 @@ public class InstrumentedMDCAwareExecutables {
         };
     }
 
-    public static <T> Collection<? extends Callable<T>> instrumentTasks(Collection<? extends Callable<T>> tasks, MetricRegistry registry, String metricPrefix) {
+    static <T> Collection<? extends Callable<T>> instrumentTasks(Collection<? extends Callable<T>> tasks, MetricRegistry registry, String metricPrefix) {
         return tasks.stream().map(task -> instrument(task, registry, metricPrefix)).collect(toList());
     }
 

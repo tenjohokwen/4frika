@@ -24,7 +24,7 @@ public class TestContext {
 
     /**
      * This bean is needed by @FlywayTest
-     * @return
+     * @return Flyway
      */
     @Bean
     public Flyway init() {

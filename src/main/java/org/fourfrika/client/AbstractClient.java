@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by mokwen on 01.02.16.
+ * Functionality common to clients
  */
 public abstract class AbstractClient {
 
@@ -92,7 +92,7 @@ public abstract class AbstractClient {
 
     /**
      * default impl wherein no headers needed
-     * @return
+     * @return HttpHeaders headers needed by downstream server
      */
     protected HttpHeaders httpHeaders() {
         return null;

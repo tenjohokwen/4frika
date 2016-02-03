@@ -1,8 +1,5 @@
 package org.fourfrika.utils;
 
-/**
- * Created by mokwen on 01.02.16.
- */
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;

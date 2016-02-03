@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
-/**
- * Created by mokwen on 30.01.16.
- */
 public class InstrumentedMDCAwareScheduledExecutor extends ScheduledThreadPoolExecutor implements DisposableBean {
 
     private final MetricRegistry metricRegistry;

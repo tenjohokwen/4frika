@@ -19,9 +19,6 @@ import static com.codahale.metrics.MetricRegistry.name;
 
 import java.io.IOException;
 
-/**
- * Created by mokwen on 01.02.16.
- */
 @Component
 public class RequestInstrumentor implements ClientHttpRequestInterceptor {
 

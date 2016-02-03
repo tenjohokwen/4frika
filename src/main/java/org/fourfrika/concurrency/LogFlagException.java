@@ -1,8 +1,5 @@
 package org.fourfrika.concurrency;
 
-/**
- * Created by mokwen on 30.01.16.
- */
 public class LogFlagException extends RuntimeException {
 
     /*
@@ -10,9 +7,13 @@ public class LogFlagException extends RuntimeException {
      */
     private final boolean logged;
 
-    public LogFlagException(Throwable cause, boolean isLogged) {
-        //super(cause);
+    public LogFlagException(boolean isLogged) {
         logged = isLogged;
+    }
+
+    public LogFlagException(Throwable cause) {
+        super(cause);
+        logged = false;
     }
 
     public boolean isLogged() {

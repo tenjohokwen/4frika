@@ -9,9 +9,9 @@ import java.util.Map;
 public class ClientContext {
     public final Exception clientStack;
     public final String clientThreadName;
-    public final Map mdcCtxt;
+    private final Map<String, String> mdcCtxt;
 
-    private ClientContext(Exception clientStack, String clientThreadName, Map mdcCxt) {
+    private ClientContext(Exception clientStack, String clientThreadName, Map<String, String> mdcCxt) {
         this.clientStack = clientStack;
         this.clientThreadName = clientThreadName;
         this.mdcCtxt = mdcCxt == null ? Collections.emptyMap() : mdcCxt;

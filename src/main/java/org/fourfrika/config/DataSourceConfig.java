@@ -15,9 +15,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-/**
- * Created by mokwen on 12.01.16.
- */
 @Configuration
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware", dateTimeProviderRef = AuditingDateTimeProvider.NAME)
 @EnableTransactionManagement

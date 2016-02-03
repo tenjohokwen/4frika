@@ -4,17 +4,14 @@ import com.codahale.metrics.Meter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by mokwen on 30.01.16.
- */
-public class ExecutorExceptionHandler {
+class ExecutorExceptionHandler {
 
     private static final Logger log = LoggerFactory.getLogger(ExecutorExceptionHandler.class);
 
     public static void handleException(Exception e, ClientContext clientContext, Meter meter) {
         traceToClient(e, clientContext, meter);
         log.error(String.format("Exception in task submitted from thread %s", clientContext.clientThreadName), e);
-        throw new LogFlagException(e, true);
+        throw new LogFlagException(true);
 
     }
 
@@ -34,7 +31,7 @@ public class ExecutorExceptionHandler {
      * @param currentStack the most recent stack
      * @param oldStack the stack got from the client
      * @param clientThreadName The name of the client thread
-     * @return
+     * @return StackTraceElement[] merged stack trace
      */
     private static StackTraceElement[] mergeStacks(StackTraceElement[] currentStack, StackTraceElement[] oldStack, String clientThreadName) {
         StackTraceElement[] combined = new StackTraceElement[currentStack.length + oldStack.length + 1];

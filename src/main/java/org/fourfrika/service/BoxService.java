@@ -17,7 +17,7 @@ public class BoxService {
 
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRED)
     public void updateBox(String label) {
-        Box box = boxRepository.findOne(1l);
+        Box box = boxRepository.findOne(1L);
 
         box.setLabel(label);
         boxRepository.save(box);

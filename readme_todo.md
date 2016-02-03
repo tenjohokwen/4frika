@@ -20,6 +20,9 @@
     * add properties-maven-plugin (see 4frika pom)
     * ensure no conflicts with spring-boot parent pom
     * dependencies already in spring-boot parent pom or base pom should be used without specifying their versions (assuming they are managed)
+    * configure maven-compiler-plugin to use [errorprone](https://github.com/google/error-prone)
+    * pit [plugin](http://pitest.org/quickstart/maven/)
+    * if you have time add [jqassistant](http://buschmais.github.io/jqassistant/doc/1.1.0/)
 
 * TomcatGaugeSet (from spaceman)
 
@@ -71,8 +74,12 @@ duplicate checker plugin
 run maven with alternative central repo
 -----------------------------------------
 
-* append to it " -P  \!groupon" e.g
+* By default, the central repo used is the one configured in settings.xml
+* the settings.xml has also been configured in such a way that an alternate repo may be used
+* Give in a cmd and append to it " -P  \!groupon" e.g
 
 ```
  mvn duplicate-finder:check  -P  \!groupon
 ```
+
+* This means that intellij idea will be using the groupon repo (since the soln above is to use the cmd line)

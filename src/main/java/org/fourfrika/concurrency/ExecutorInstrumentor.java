@@ -9,9 +9,6 @@ import java.util.concurrent.TimeUnit;
 
 import static com.codahale.metrics.MetricRegistry.name;
 
-/**
- * Created by mokwen on 14.11.15.
- */
 class ExecutorInstrumentor {
 
     public static final String QUEUE_DELAY_POSTFIX = "queue-delay";
@@ -24,15 +21,15 @@ class ExecutorInstrumentor {
     public static final String CURRENT_POOL_SIZE_POSTFIX = "current-pool-size";
 
     public static void configureMetrics(MetricRegistry metricsRegistry, String givenName, ThreadPoolExecutor executor) {
-        metricsRegistry.<Gauge<Integer>>register(name(givenName, "core-pool-size"),() -> executor.getCorePoolSize());
-        metricsRegistry.<Gauge<Integer>>register(name(givenName, "max-pool-size"), () -> executor.getMaximumPoolSize());
-        metricsRegistry.<Gauge<Integer>>register(name(givenName, CURRENT_POOL_SIZE_POSTFIX), () -> executor.getPoolSize());
+        metricsRegistry.<Gauge<Integer>>register(name(givenName, "core-pool-size"), executor::getCorePoolSize);
+        metricsRegistry.<Gauge<Integer>>register(name(givenName, "max-pool-size"), executor::getMaximumPoolSize);
+        metricsRegistry.<Gauge<Integer>>register(name(givenName, CURRENT_POOL_SIZE_POSTFIX), executor::getPoolSize);
         metricsRegistry.<Gauge<Long>>register(name(givenName, "keep-alive-time-seconds"), () -> executor.getKeepAliveTime(TimeUnit.SECONDS));
-        metricsRegistry.<Gauge<Integer>>register(name(givenName, ACTIVE_THREAD_COUNT_POSTFIX), () -> executor.getActiveCount());
-        metricsRegistry.<Gauge<Long>>register(name(givenName, COMPLETED_TASK_COUNT_POSTFIX),() -> executor.getCompletedTaskCount());
-        metricsRegistry.<Gauge<Long>>register(name(givenName, AGGREGATED_TASK_COUNT_POSTFIX),()-> executor.getTaskCount());
+        metricsRegistry.<Gauge<Integer>>register(name(givenName, ACTIVE_THREAD_COUNT_POSTFIX), executor::getActiveCount);
+        metricsRegistry.<Gauge<Long>>register(name(givenName, COMPLETED_TASK_COUNT_POSTFIX), executor::getCompletedTaskCount);
+        metricsRegistry.<Gauge<Long>>register(name(givenName, AGGREGATED_TASK_COUNT_POSTFIX), executor::getTaskCount);
         metricsRegistry.<Gauge<Integer>>register(name(givenName, QUEUE_SIZE_POSTFIX), () -> executor.getQueue().size());
-        metricsRegistry.<Gauge<Integer>>register(name(givenName, LARGEST_POOL_SIZE_POSTFIX), () -> executor.getLargestPoolSize());
+        metricsRegistry.<Gauge<Integer>>register(name(givenName, LARGEST_POOL_SIZE_POSTFIX), executor::getLargestPoolSize);
         metricsRegistry.timer(MetricRegistry.name(givenName, QUEUE_DELAY_POSTFIX));
         metricsRegistry.register(name(givenName, EXCEPTION_POSTFIX), new Meter());
     }

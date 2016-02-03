@@ -15,9 +15,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * Created by mokwen on 22.01.16.
- */
 @Configuration
 public class InfoPropertiesConfiguration {
     @Autowired
@@ -43,8 +40,8 @@ public class InfoPropertiesConfiguration {
         return new InfoEndpoint(info);
     }
 
-    public GitInfo gitInfo() throws Exception {
-        PropertiesConfigurationFactory<GitInfo> factory = new PropertiesConfigurationFactory<GitInfo>(
+    private GitInfo gitInfo() throws Exception {
+        PropertiesConfigurationFactory<GitInfo> factory = new PropertiesConfigurationFactory<>(
                 new GitInfo());
         factory.setTargetName("git");
         Properties properties = new Properties();
@@ -55,8 +52,8 @@ public class InfoPropertiesConfiguration {
         return factory.getObject();
     }
 
-    public Map<String, Object> infoMap() throws Exception {
-        PropertiesConfigurationFactory<Map<String, Object>> factory = new PropertiesConfigurationFactory<Map<String, Object>>(
+    private Map<String, Object> infoMap() throws Exception {
+        PropertiesConfigurationFactory<Map<String, Object>> factory = new PropertiesConfigurationFactory<>(
                 new LinkedHashMap<>());
         factory.setTargetName("info");
         factory.setPropertySources(this.environment.getPropertySources());
