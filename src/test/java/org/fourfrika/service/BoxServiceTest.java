@@ -35,10 +35,10 @@ public class BoxServiceTest extends DBUnitTest {
         List<Box> boxes = boxRepository.findAll();
         int initialCount = boxes.size();
         persistBox();
-        boxRepository.delete(5l);
+        boxRepository.delete(5L);
         boxes =  boxRepository.findAll();
         assertTrue(boxes.size() == (initialCount));
-        boxService.delete(2l);
+        boxService.delete(2L);
         Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
     }
 
@@ -51,9 +51,9 @@ public class BoxServiceTest extends DBUnitTest {
     private void persistBox() {
         Box box = new Box();
         box.setLabel("blueLabel");
-        box.setId(21l);
+        box.setId(21L);
         boxRepository.save(box);
-        Box boxx = boxRepository.getOne(21l);
+        Box boxx = boxRepository.getOne(21L);
         boxx.setLabel("blue_label");
         boxRepository.save(boxx);
     }
