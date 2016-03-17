@@ -1,6 +1,7 @@
 package org.fourfrika.health;
 
 import org.fourfrika.client.AbstractClient;
+import org.fourfrika.commons.Constants;
 import org.springframework.boot.actuate.health.AbstractHealthIndicator;
 import org.springframework.boot.actuate.health.Health;
 
@@ -14,8 +15,8 @@ public class GenericClientHealthIndicator extends AbstractHealthIndicator {
 
     @Override
     protected void doHealthCheck(Health.Builder builder) throws Exception {
-        AbstractClient.HealthResponse healthResponse = client.healthCheck();
-        builder = healthResponse == AbstractClient.HealthResponse.OK ? builder.up() : builder.down() ;
-        builder.withDetail("message", healthResponse.toString());
+        String healthResponse = client.healthCheck();
+        builder = Constants.HEARTBEAT_OK.equals(healthResponse) ? builder.up() : builder.down() ;
+        builder.withDetail("state", healthResponse);
     }
 }

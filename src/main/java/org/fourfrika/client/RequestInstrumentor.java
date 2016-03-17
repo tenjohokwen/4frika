@@ -7,6 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.client.ClientHttpRequestExecution;
@@ -40,6 +41,9 @@ public class RequestInstrumentor implements ClientHttpRequestInterceptor {
             latencyHistogram.update(System.currentTimeMillis() - startTime);
             markResponse(request, httpResponse.getStatusCode());
             logRequestMetrics(request, httpResponse.getStatusCode().name(), startTime);
+            if (log.isDebugEnabled() && HttpMethod.POST.equals(request.getMethod())) {
+                log.debug("Payload: {}", new String(body));
+            }
             return httpResponse;
         } catch (HttpStatusCodeException e) {
             markResponse(request, e.getStatusCode());

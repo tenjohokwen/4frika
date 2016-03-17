@@ -83,3 +83,8 @@ run maven with alternative central repo
 ```
 
 * This means that intellij idea will be using the groupon repo (since the soln above is to use the cmd line)
+
+
+Logging
+-------
+add logging in such a way that you can inspect difficult areas in the code on production by changing the log level using jconsole

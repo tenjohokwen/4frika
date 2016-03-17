@@ -4,7 +4,7 @@
 	<parent>
             <groupId>org.mvn</groupId>
             <artifactId>base-pom</artifactId>
-            <version>1.5</version>
+            <version>1.6</version>
 	</parent>
 	<artifactId>4frika</artifactId>
 	<groupId>org.fourfrika</groupId>
@@ -39,6 +39,8 @@
         <dropwizard-metrics.version>3.1.2</dropwizard-metrics.version>
         <metrics-spring.version>3.0.4</metrics-spring.version>
         <testng.version>6.9.9</testng.version>
+        <awaitility.version>1.7.0</awaitility.version>
+        <thready.version>1.0</thready.version>
         <!--joda-time.version>2.9.1</joda-time.version-->
 	</properties>
     <dependencyManagement>
@@ -54,7 +56,12 @@
         </dependencies>
     </dependencyManagement>
     <dependencies>
-		<dependency>
+        <dependency>
+            <groupId>org.tenjoh.okwen</groupId>
+            <artifactId>thready</artifactId>
+            <version>${thready.version}</version>
+        </dependency>
+        <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
             <exclusions>
@@ -324,6 +331,12 @@
             <version>${testng.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.jayway.awaitility</groupId>
+            <artifactId>awaitility</artifactId>
+            <version>${awaitility.version}</version>
+            <scope>test</scope>
+        </dependency>
         <!--dependency>
             <groupId>com.ibm.icu</groupId>
             <artifactId>icu4j</artifactId>
@@ -356,10 +369,15 @@
                     <mainClass>${start-class}</mainClass>
                 </configuration>
 			</plugin>
+           <!-- maven-surefire-plugin is the default target when running 'mvn test'.  We include it here  -->
             <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+            </plugin>
+            <plugin>
+                <!-- needed here else will be executed and will fail when releasing base pom -->
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>properties-maven-plugin</artifactId>
-                <version>1.0.0</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -372,7 +390,7 @@
                             </files>
                         </configuration>
                     </execution>
-                    <!--execution>This was an attempt to configure tomcat log time to a given timezone
+                    <!--execution> set timezone here or in application-commons.properties. This does not work currently
                         <phase>initialize</phase>
                         <goals>
                             <goal>set-system-properties</goal>
@@ -380,8 +398,8 @@
                         <configuration>
                             <properties>
                                 <property>
-                                    <name>CATALINA_OPTS</name>
-                                    <value>user.timezone=America/New_York</value>
+                                    <name>user.timezone</name>
+                                    <value>America/New_York</value>
                                 </property>
                             </properties>
                         </configuration>
@@ -389,131 +407,10 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>pl.project13.maven</groupId>
-                <artifactId>git-commit-id-plugin</artifactId>
-                <version>${basepom.plugin.git-commit-id.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>revision</goal>
-                        </goals>
-
-                    </execution>
-                </executions>
-
-                <configuration>
-                    <prefix>git</prefix>
-                    <dateFormat>dd.MM.yyyy '@' HH:mm:ss z</dateFormat>
-                    <verbose>true</verbose>
-                    <dotGitDirectory>${basedir}/.git</dotGitDirectory>
-                    <skipPoms>true</skipPoms>
-                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>src/main/resources/git.properties</generateGitPropertiesFilename>
-                    <failOnNoGitDirectory>false</failOnNoGitDirectory>
-                    <gitDescribe>
-                        <!-- don't generate the describe property -->
-                        <skip>false</skip>
-                        <always>false</always>
-                        <!-- how many chars should be displayed as the commit object id? -->
-                        <abbrev>7</abbrev>
-                        <!-- when the build is triggered while the repo is in "dirty state", append this suffix -->
-                        <dirty>-dirty</dirty>
-                        <forceLongFormat>false</forceLongFormat>
-                    </gitDescribe>
-                </configuration>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.1.9</version>
             </plugin>
-            <!-- maven-surefire-plugin is the default target when running 'mvn test'.  We include it here  -->
-            <!-- since we need to specify the custom.logpath variable in order for our logging to work.    -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19.1</version>
-                <configuration>
-                    <properties>
-                        <property>
-                            <name>junit</name>
-                            <value>false</value>
-                        </property>
-                    </properties>
-                    <threadCount>1</threadCount>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-junit47</artifactId>
-                        <version>2.19.1</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>org.apache.maven.surefire</groupId>
-                        <artifactId>surefire-testng</artifactId>
-                        <version>2.19.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <plugin>
-                <groupId>com.ning.maven.plugins</groupId>
-                <artifactId>maven-dependency-versions-check-plugin</artifactId>
-                <version>${basepom.plugin.dependency-versions-check.version}</version>
-                <configuration>
-                    <skip>false</skip>
-                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.ning.maven.plugins</groupId>
-                <artifactId>maven-duplicate-finder-plugin</artifactId>
-                <version>${basepom.plugin.duplicate-finder.version}</version>
-                <configuration>
-                    <skip>false</skip>
-                    <failBuildInCaseOfConflict>true</failBuildInCaseOfConflict>
-                    <ignoredDependencies>
-                        <dependency>
-                            <!-- seems to have some duplicates with hibernate-jpa-2.1-api but should be ignored-->
-                            <groupId>org.apache.tomcat.embed</groupId>
-                            <artifactId>tomcat-embed-core</artifactId>
-                        </dependency>
-                    </ignoredDependencies>
-                    <ignoredResources>
-                        <resource>META-INF/spring.factories</resource>
-                        <resource>META-INF/spring.provides</resource>
-                        <resource>META-INF/additional-spring-configuration-metadata.json</resource>
-                        <resource>META-INF/spring-configuration-metadata.json</resource>
-                        <resource>META-INF/web-fragment.xml</resource>
-                        <resource>changelog.txt</resource>
-                    </ignoredResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${basepom.plugin.compiler.version}</version>
-                <configuration>
-                    <source>${project.build.targetJdk}</source>
-                    <target>${project.build.targetJdk}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
-                    <meminitial>${basepom.build.memory.initial}</meminitial>
-                    <maxmem>${basepom.build.memory.max}</maxmem>
-                    <showWarnings>true</showWarnings>
-                    <compilerArgument>-Xlint:unchecked</compilerArgument>
-                    <compilerId>javac-with-errorprone</compilerId>
-                    <forceJavacCompilerUse>true</forceJavacCompilerUse>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-javac-errorprone</artifactId>
-                        <version>2.5</version>
-                    </dependency>
-                    <!-- override plexus-compiler-javac-errorprone's dependency on
-                         Error Prone with the latest version -->
-                    <dependency>
-                        <groupId>com.google.errorprone</groupId>
-                        <artifactId>error_prone_core</artifactId>
-                        <version>2.0.7</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
         </plugins>
 	</build>
     <profiles>
@@ -526,7 +423,7 @@
                         <artifactId>flyway-maven-plugin</artifactId>
                         <version>3.2.1</version>
                         <configuration>
-                            <!-- depends on properties-maven-plugin-->
+                            <!-- depends on properties-maven-plugin for 'app.name'-->
                             <url>jdbc:mysql://localhost:3306/${app.name}</url>
                             <user>root</user>
                         </configuration>
@@ -543,6 +440,7 @@
                         <artifactId>flyway-maven-plugin</artifactId>
                         <version>3.2.1</version>
                         <configuration>
+                            <!-- depends on properties-maven-plugin for 'app.name'-->
                             <url>jdbc:mysql://localhost:3306/${app.name}</url>
                         </configuration>
                     </plugin>

@@ -1,4 +1,9 @@
 
+0. Add scm to pom
+-----------------
+* In the pom file add the scm so that it points to the repository of the current project
+* If the scm is not added, releases and deployments will attempt to take the one in the parent pom
+
 
 1. Profile Config
 -----------------
