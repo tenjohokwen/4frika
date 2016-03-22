@@ -1,12 +1,12 @@
 package org.fourfrika.security;
 
-import org.springframework.security.core.Authentication;
+/*import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetails;*/
 
 import java.util.Collection;
 
@@ -21,7 +21,7 @@ public final class SecurityUtils {
     /**
      * Get the login of the current user.
      */
-    public static String getCurrentUserLogin() {
+    /*public static String getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         String userName = null;
@@ -41,7 +41,7 @@ public final class SecurityUtils {
      *
      * @return true if the user is authenticated, false otherwise
      */
-    public static boolean isAuthenticated() {
+    /*public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Collection<? extends GrantedAuthority> authorities = securityContext.getAuthentication().getAuthorities();
         if (authorities != null) {
@@ -60,7 +60,7 @@ public final class SecurityUtils {
      *
      * @return the current user
      */
-    public static User getCurrentUser() {
+   /* public static User getCurrentUser() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
@@ -69,14 +69,14 @@ public final class SecurityUtils {
             }
         }
         throw new IllegalStateException("User not found!");
-    }
+    }*/
 
     /**
      * If the current user has a specific authority (security role).
      *
      * <p>The name of this method comes from the isUserInRole() method in the Servlet API</p>
      */
-    public static boolean isCurrentUserInRole(String authority) {
+   /* public static boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
@@ -86,5 +86,5 @@ public final class SecurityUtils {
             }
         }
         return false;
-    }
+    }*/
 }
