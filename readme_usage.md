@@ -82,6 +82,10 @@ logging
 
 * the "combined" format is like so... %h %l %u [%t] "%r" %s %b "%i{Referer}" "%i{User-Agent}"
 
+* Configure for jmx by adding the following to the configuration element
+
+        <jmxConfigurator/>
+        <contextName>smartix</contextName>
 
 spring base appender
 --------------------
@@ -165,7 +169,16 @@ Date zone
 @Type(type="org.jadira.usertype.dateandtime.joda.PersistentDateTime")
 private DateTime dateTime;
 ```
+`
 
+* For java8 date time lib the following works with postgres but not with mysql
+
+```
+@Column(name = "creation_time", nullable = false)
+@Type(type = "org.jadira.usertype.dateandtime.threeten.PersistentLocalDateTime")
+@CreatedDate
+private ZonedDateTime creationTime;
+``
 
 Profiles
 ---------

@@ -31,7 +31,7 @@ Exception handling
 * core exception: 4frikaException (runtimeException, protected field "HELP_CODE" UUID that is generated when exception is created and final)
 * override the getMessage in every impl
 * "HELP_CODE" should be available in getMessage => logs should all contain the HELP_CODE UUID
-* See ErrorMessage (and CheckoutApiExceptionHandler) of spaceman for ideas on how to prepare client friendly message
+* See ErrorMessage (and CheckoutApiExceptionHandler) of spaceman for ideas on how to prepare client friendly message (consider localization)
 
 touched
 --------
@@ -88,3 +88,53 @@ run maven with alternative central repo
 Logging
 -------
 add logging in such a way that you can inspect difficult areas in the code on production by changing the log level using jconsole
+
+Captcha
+-------
+* https://github.com/axet/kaptcha
+
+
+testing
+-------
+
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-test</artifactId>
+        <scope>test</scope>
+      </dependency>
+
+
+thymeleaf
+---------
+
+<dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+        <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+        </dependency>
+        <dependency>
+
+
+ Hibernate
+ ---------
+
+         <dependency>
+             <groupId>org.hibernate</groupId>
+             <artifactId>hibernate-java8</artifactId>
+             <version>${hibernate5Java8}</version>
+         <dependency>
+
+ * consider switching to hibernate core 5 and also adding the dependency above
+ * Then use java 8 Date package and this should solve ZonedDateTime issues
+ * Switch from jodatime to java8 time in abstractAuditingEntity
+ * Consider adding requestId (or actionId) to AbstractAuditingEntity
+ * Be really sure hibernate 5 is not getting anything broken

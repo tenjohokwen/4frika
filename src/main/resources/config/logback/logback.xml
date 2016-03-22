@@ -13,5 +13,8 @@
     <root level="INFO">
         <appender-ref ref="FILE" />
     </root>
+
+    <jmxConfigurator/>
+    <contextName>smartix</contextName>
 </configuration>
 

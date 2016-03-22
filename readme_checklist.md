@@ -19,3 +19,4 @@ checks after full deployment
    * Branch
    * If possible a complete flow (this is a test with dummy objects on live)
    * used maven profiles
+   * log levels
